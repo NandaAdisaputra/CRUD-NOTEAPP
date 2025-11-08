@@ -1,0 +1,31 @@
+package com.nandaadisaputra.noteapp.network
+
+import com.nandaadisaputra.noteapp.utils.e
+import java.net.HttpURLConnection
+import java.net.URL
+import java.net.URLConnection
+
+object ApiRequest {
+    // URL dasar API Google Apps Script
+    private const val BASE_URL =
+        "https://script.google.com/macros/s/AKfycbxbC0CrCD_w8wvl5XAXUKW2gObUdb5AzYDEZ1n7j01xJSCI-Fl2SpqfTEh2X0qJ3KAcAA/exec"
+
+    // Fungsi untuk melakukan request GET ke server, mengambil data dari server
+    fun get(end: String): String = URL("$BASE_URL?endpoint=$end").openConnection().getInputStreamText()
+
+    // Fungsi untuk request GET dengan token
+    fun getWithToken(end: String, token: String): String =
+        URL("$BASE_URL?endpoint=$end&token=${token.e()}").openConnection().getInputStreamText()
+
+    // Fungsi untuk membaca response dari server, baik itu hasil GET atau POST
+    private fun URLConnection.getInputStreamText() = getInputStream().bufferedReader().readText()
+
+    // Fungsi untuk mengirim request POST dengan data tertentu
+    fun post(data: String): String {
+        val conn = URL(BASE_URL).openConnection() as HttpURLConnection
+        conn.requestMethod = "POST"
+        conn.doOutput = true
+        conn.outputStream.write(data.toByteArray())
+        return conn.inputStream.bufferedReader().readText()
+    }
+}
