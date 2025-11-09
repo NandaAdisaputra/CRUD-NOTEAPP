@@ -8,14 +8,14 @@ object NoteApi {
     fun getNotes(): String = ApiRequest.get("getnotes")
 
     // Fungsi untuk mendapatkan detail catatan berdasarkan ID (menggunakan GET)
-    fun getNoteById(id: String): String = ApiRequest.get("getNoteById&id=${id.e()}")
+    fun getNoteById(id: String): String = ApiRequest.get("getnotebyid&id=${id.e()}")
 
     // Fungsi untuk menampilkan catatan dengan token dan paginasi
     fun getNotesPaginatedWithToken(page: Int, limit: Int, token: String): String {
-        return ApiRequest.get("getNotesPaginatedwithToken&page=$page&limit=$limit&token=${token.e()}")
+        return ApiRequest.get("getnotespaginatedwithtoken&page=$page&limit=$limit&token=${token.e()}")
     }
     // Fungsi untuk mencari catatan berdasarkan query tertentu (menggunakan GET)
-    fun searchNotes(query: String): String = ApiRequest.get("searchNotes&query=${query.e()}")
+    fun searchNotes(query: String): String = ApiRequest.get("searchnotes&query=${query.e()}")
 
     // Fungsi untuk menambahkan catatan baru (menggunakan POST)
     fun addNote(title: String, description: String): String {
